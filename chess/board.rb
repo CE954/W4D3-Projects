@@ -54,6 +54,10 @@ class Board
         end
     end
 
+     def valid_pos?(pos)
+        x, y = pos 
+        x.between?(0,7) && y.between?(0,7) 
+    end
 end
 
 board = Board.new 
