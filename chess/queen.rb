@@ -15,3 +15,6 @@ class Queen < Piece
         HORIZONTAL + DIAGONAL
     end
 end
+
+queen = Queen.new("W", "_", [0,0])
+p queen.to_s

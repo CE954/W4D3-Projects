@@ -2,22 +2,22 @@ require_relative "piece.rb"
 require "byebug"
 require_relative "null_piece.rb"
 class Board 
-    attr_reader :board
+    attr_reader :grid
     def initialize
-        @board = Array.new(8) {Array.new(8)}
+        @grid = Array.new(8) {Array.new(8)}
         @null = NullPiece.instance
     end
 
     def set_board
         # null = NullPiece.instance
-        (0...@board.length).each do |x|
-            (0...@board.length).each do |y|
+        (0...@grid.length).each do |x|
+            (0...@grid.length).each do |y|
                 if x.between?(2,5)
-                    @board[x][y] = @null
+                    @grid[x][y] = @null
                 elsif x.between?(0,1) 
-                    @board[x][y] = Piece.new(:B, self, [x,y])
+                    @grid[x][y] = Piece.new("B", self, [x,y])
                 else
-                    @board[x][y] = Piece.new(:W, self, [x,y])
+                    @grid[x][y] = Piece.new("W", self, [x,y])
                 end
             end 
         end
@@ -26,18 +26,18 @@ class Board
     def []=(pos, value)
         # debugger
         x,y = pos 
-        @board[x][y] = value
+        @grid[x][y] = value
     end
 
     def [](pos)
         x,y = pos 
-        @board[x][y] 
+        @grid[x][y] 
     end
 
     def move_piece(start_pos, end_pos) 
-        # if @board[start_pos].nil? 
+        # if @grid[start_pos].nil? 
         #     raise "No piece at position" 
-        # elsif !@board[end_pos].valid_move? 
+        # elsif !@grid[end_pos].valid_move? 
         #     raise "Not a valid move"
         # end
 
@@ -46,11 +46,8 @@ class Board
     end
 
     def print
-
-        @board.map do |row|
-            row.map do |el|
-                p el.color
-            end
+        @grid.map do |row|
+            row.map { |ele| ele.color }.join(" ")
         end
     end
 
@@ -60,9 +57,9 @@ class Board
     end
 end
 
-board = Board.new 
-board.set_board 
-p board.board
-p board.move_piece([1,1], [2,0])
-# p board.board
-p board.print
+# board = Board.new 
+# board.set_board 
+# # p board.board
+# # p board.move_piece([1,1], [2,0])
+# # p board.board
+# p board.print
