@@ -5,15 +5,15 @@ class Board
     attr_reader :board
     def initialize
         @board = Array.new(8) {Array.new(8)}
-
+        @null = NullPiece.instance
     end
 
     def set_board
-        null = NullPiece.instance
+        # null = NullPiece.instance
         (0...@board.length).each do |x|
             (0...@board.length).each do |y|
                 if x.between?(2,5)
-                    @board[x][y] = null
+                    @board[x][y] = @null
                 elsif x.between?(0,1) 
                     @board[x][y] = Piece.new(:B, self, [x,y])
                 else
@@ -42,7 +42,7 @@ class Board
         # end
 
         self[end_pos] = self[start_pos]
-        self[start_pos] = nil 
+        self[start_pos] = @null
     end
 
     def print

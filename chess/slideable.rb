@@ -5,7 +5,7 @@ module Slideable
     DIAGONAL = [[-1,-1], [1, 1], [-1, 1], [1,-1]]
     HORIZONTAL = [[-1, 0], [0, -1], [0, 1], [1, 0]]
 
-    def moves(pos)
+    def moves
         all_possible_pos = [] 
         self.moves_dirs.each do |(dx, dy)| 
             all_possible_pos += grow_unblocked_moves(dx, dy)
@@ -28,7 +28,7 @@ module Slideable
         prev_pos = self.position[-1]
         x, y = self.position[-1]
         c_pos = [x + dx, y + dy]
-        while valid_move?(c_pos) && @board[c_pos].nil? || @board[c_pos].color != self.color
+        while valid_move?(c_pos) && @board[c_pos].instance_of?(NullPiece) || @board[c_pos].color != self.color
             moves << c_pos
             a, b = c_pos
             c_pos = [a + dx, b + dy]

@@ -1,16 +1,16 @@
 require_relative "stepable.rb"
 require_relative "piece.rb"
 
-class Knight < Piece
+class King < Piece
 include Stepable
 
     def initialize(color, board, pos)
         super
-        @symbol = "Kn"
+        @symbol = "Ki"
     end
 
     def move_diffs
-        self.KNIGHT
+        self.KING
     end
 
 end
