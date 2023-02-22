@@ -32,23 +32,47 @@ class Pawn < Piece
     end
 
     def forward_steps
+        result = []
+
         if self.forward_dir == -1
             dx, dy = [1, 0]
             c_pos = @position[-1]
             x, y = c_pos
-            return [x + dx, y + dy] 
+            result << [x + dx, y + dy] 
+            if self.at_start_row?
+                result << [x + (dx * 2), y + dy] 
+            end
         elsif self.forward_dir == 1
             dx, dy = [-1, 0]
             c_pos = @position[-1]
             x, y = c_pos
-            return [x + dx, y + dy] 
+            result << [x + dx, y + dy] 
+            if self.at_start_row?
+                result << [x + (dx * 2), y + dy] 
+            end
         end
-        # [[]]
+        #  check that spaces are valid to move in 
+       result.select { |pos| valid_move?(pos)  && @board[pos].instance_of?(NullPiece)} 
     end
 
     def side_attacks
-    
-        # [[],[]]
+        results = []
+         if self.forward_dir == -1
+            diagonal = [[-1, -1], [-1, 1]] 
+            c_pos = @position[-1]
+            x, y = c_pos
+            daigonal.each do |(dx, dy)|
+                result << [x + dx, y + dy]
+            end 
+        elsif self.forward_dir == 1
+            diagonal = [[1, 1], [1, -1]]
+             c_pos = @position[-1]
+            x, y = c_pos
+            daigonal.each do |(dx, dy)|
+                result << [x + dx, y + dy]
+            end 
+        end
+        result.select { |pos| valid_move?(pos) && @board[pos].color != self.color } 
     end
 
 end
