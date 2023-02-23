@@ -6,7 +6,7 @@ include Stepable
 
     def initialize(color, board, pos)
         super
-        @symbol = "Ki"
+        @symbol = "K"
     end
 
     def move_diffs

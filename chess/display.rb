@@ -23,16 +23,16 @@ class Display
     end
 
     def color_for(i, j)
-        if [i, j] == @cursor.cursor_pos
-            bg = :light_red
-        elsif @cursor.selected == true && [i, j] == @cursor.cursor_pos
+        if [i, j] == @cursor.cursor_pos && @cursor.selected == true
             bg = :green
+        elsif [i, j] == @cursor.cursor_pos
+            bg = :light_red
         elsif (i + j).odd? 
-            bg = :light_blue
+            bg = :light_gray
         else  
-            bg = :blue 
+            bg = :black 
         end
-        { background: bg, color: :white }
+        { background: bg } #color: :white 
     end
 
     def render 
@@ -46,5 +46,7 @@ board.set_board
 display = Display.new(board)
 loop do 
     display.render
-    display.cursor.get_input
+    start_pos = display.cursor.get_input
+    # end_pos = display.cursor.get_input
+    # board.make_move(start_pos, end_pos)
 end

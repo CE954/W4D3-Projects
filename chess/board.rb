@@ -1,6 +1,14 @@
 require_relative "piece.rb"
 require "byebug"
 require_relative "null_piece.rb"
+require_relative "rook.rb"
+require_relative "queen.rb"
+require_relative "bishop.rb"
+require_relative "pawn.rb"
+require_relative "king.rb"
+require_relative "knight.rb"
+
+
 class Board 
     attr_reader :grid
     def initialize
@@ -12,12 +20,32 @@ class Board
         # null = NullPiece.instance
         (0...@grid.length).each do |x|
             (0...@grid.length).each do |y|
-                if x.between?(2,5)
+                if [x, y] == [0,0] || [x, y] == [0, 7]
+                    @grid[x][y] = Rook.new("B", self, [x,y])
+                elsif [x, y] == [7,0] || [x, y] == [7, 7]
+                    @grid[x][y] = Rook.new("W", self, [x,y])
+                elsif [x, y] == [0, 1] || [x, y] == [0, 6]
+                    @grid[x][y] = Knight.new("B", self, [x,y])
+                elsif [x, y] == [7,1] || [x, y] == [7, 6]
+                    @grid[x][y] = Knight.new("W", self, [x,y])
+                elsif [x, y] == [0, 2] || [x, y] == [0, 5]
+                    @grid[x][y] = Bishop.new("B", self, [x,y])
+                elsif [x, y] == [7, 2] || [x, y] == [7, 5]
+                    @grid[x][y] = Bishop.new("W", self, [x,y])
+                elsif [x, y] == [0, 3]
+                    @grid[x][y] = Queen.new("B", self, [x,y])
+                elsif [x, y] == [7, 3]
+                    @grid[x][y] = Queen.new("W", self, [x,y])
+                elsif [x, y] == [0, 4]
+                    @grid[x][y] = King.new("B", self, [x,y])
+                elsif [x, y] == [7, 4]
+                    @grid[x][y] = King.new("W", self, [x,y])
+                elsif x.between?(2,5)
                     @grid[x][y] = @null
-                elsif x.between?(0,1) 
-                    @grid[x][y] = Piece.new("B", self, [x,y])
-                else
-                    @grid[x][y] = Piece.new("W", self, [x,y])
+                elsif x == 1 
+                    @grid[x][y] = Pawn.new("B", self, [x,y])
+                elsif x == 6
+                     @grid[x][y] = Pawn.new("W", self, [x,y])
                 end
             end 
         end
@@ -43,6 +71,8 @@ class Board
 
         self[end_pos] = self[start_pos]
         self[start_pos] = @null
+        # update pieces positon in attribute
+        self[end_pos].position << end_pos
     end
 
     def print
@@ -54,6 +84,36 @@ class Board
      def valid_pos?(pos)
         x, y = pos 
         x.between?(0,7) && y.between?(0,7) 
+    end
+
+    def in_check?(color)
+        (0...@grid.length).each do |i|
+            (0...@grid.length).each do |j|
+                if @grid[i][j].instance_of?(King) &&  @grid[i][j].color == color
+                    king_pos = @grid[i][j].position[-1]
+                end
+            end
+        end
+        (0...@grid.length).each do |i|
+            (0...@grid.length).each do |j|
+                if  @grid[i][j].color != color &&  @grid[i][j].moves.include?(king_pos)
+                    return true
+                end 
+            end
+        end
+        false
+    end
+
+    def checkmake?(color)
+        return false if !in_check?(color) 
+
+        (0...@grid).each do |i|
+            (0...@grid).each do |j|
+
+            end
+        end
+
+    
     end
 end
 
