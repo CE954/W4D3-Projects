@@ -2,7 +2,7 @@ require_relative "piece.rb"
 require_relative "slideable.rb"
 
 class Queen < Piece
-    include Slideable
+include Slideable
 
     attr_reader :symbol
     
@@ -16,5 +16,9 @@ class Queen < Piece
     end
 end
 
+if $PROGRAM_NAME ==  __FILE__
+
 queen = Queen.new("W", "_", [0,0])
 p queen.to_s
+
+end

@@ -41,6 +41,8 @@ class Display
     end
 end
 
+if $PROGRAM_NAME ==  __FILE__
+
 board = Board.new
 board.set_board
 display = Display.new(board)
@@ -49,4 +51,6 @@ loop do
     start_pos = display.cursor.get_input
     # end_pos = display.cursor.get_input
     # board.make_move(start_pos, end_pos)
+end
+
 end

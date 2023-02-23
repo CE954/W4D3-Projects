@@ -1,5 +1,6 @@
-require_relative "piece.rb"
+
 require "byebug"
+require_relative "piece.rb"
 require_relative "null_piece.rb"
 require_relative "rook.rb"
 require_relative "queen.rb"
@@ -7,6 +8,9 @@ require_relative "bishop.rb"
 require_relative "pawn.rb"
 require_relative "king.rb"
 require_relative "knight.rb"
+require_relative "slideable.rb"
+require_relative "stepable.rb"
+
 
 
 class Board 
@@ -77,7 +81,7 @@ class Board
 
     def print
         @grid.map do |row|
-            row.map { |ele| ele.color }.join(" ")
+            row.map { |ele| ele.to_s }.join(" ")
         end
     end
 
@@ -104,7 +108,17 @@ class Board
         false
     end
 
-    def checkmake?(color)
+    # possibly make hash with type as key and obj as value
+
+
+    def pieces
+        # iterate through all rows
+        # reject all nullpieces
+        # .flatten
+        # collect objs and postions
+    end
+
+    def checkmate?(color)
         return false if !in_check?(color) 
 
         (0...@grid).each do |i|
@@ -117,9 +131,13 @@ class Board
     end
 end
 
-# board = Board.new 
-# board.set_board 
+if $PROGRAM_NAME ==  __FILE__
+
+board = Board.new 
+board.set_board 
 # # p board.board
 # # p board.move_piece([1,1], [2,0])
 # # p board.board
-# p board.print
+p board.print
+
+end

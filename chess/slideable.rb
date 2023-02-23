@@ -1,4 +1,3 @@
-require_relative "board.rb"
 
 
 module Slideable
